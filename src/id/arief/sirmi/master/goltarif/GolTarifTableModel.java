@@ -5,7 +5,6 @@
  */
 package id.arief.sirmi.master.goltarif;
 
-import id.arief.sirmi.transaksi.tarifmobil.Tarif;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;

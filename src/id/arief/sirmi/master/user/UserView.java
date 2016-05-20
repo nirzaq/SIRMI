@@ -1,10 +1,10 @@
 package id.arief.sirmi.master.user;
 
+import id.arief.sirmi.home.HomeView;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.MessageUtil;
 import id.arief.sirmi.util.ViewUtil;
 import static id.arief.sirmi.home.HomeView.desktopPaneUtama;
-import static id.arief.sirmi.home.HomeView.menuItemMasterUser;
 import id.arief.sirmi.util.TableUtil;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -69,7 +69,7 @@ public class UserView extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+13));
-        jLabel1.setText("MASTER USER");
+        jLabel1.setText("DATA USER");
         jPanel1.add(jLabel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -244,7 +244,7 @@ public class UserView extends javax.swing.JInternalFrame {
 
     private void buttonKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKeluarActionPerformed
         dispose();
-        menuItemMasterUser.setEnabled(true);
+        HomeView.menuItemTambahUser.setEnabled(true);
     }//GEN-LAST:event_buttonKeluarActionPerformed
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed

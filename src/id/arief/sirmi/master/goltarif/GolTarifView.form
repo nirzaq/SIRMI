@@ -73,7 +73,7 @@
                 <Font bold="true" component="jLabel1" property="font" relativeSize="true" size="13"/>
               </FontInfo>
             </Property>
-            <Property name="text" type="java.lang.String" value="MASTER TARIF"/>
+            <Property name="text" type="java.lang.String" value="MASTER GOLONGAN TARIF"/>
           </Properties>
         </Component>
       </SubComponents>

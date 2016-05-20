@@ -17,13 +17,11 @@ import org.jdesktop.xswingx.PromptSupport;
  *
  * @author arief-asus
  */
-public class TarifView extends javax.swing.JInternalFrame {
+public class TransaksiPenyewaanDataView extends javax.swing.JInternalFrame {
     
-    TarifTableModel tableModel = new TarifTableModel();
-    TarifController controller = new TarifController();
-    TransaksiPenyewaanView tambahUbah = new TransaksiPenyewaanView();
 
-    public TarifView() {
+
+    public TransaksiPenyewaanDataView() {
         initComponents();
     }
 
@@ -49,7 +47,6 @@ public class TarifView extends javax.swing.JInternalFrame {
 
         textNopol.setText("jTextField1");
 
-        setTitle("Master Mobil");
         setAutoscrolls(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -72,7 +69,7 @@ public class TarifView extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+13));
-        jLabel1.setText("TARIF MOBIL");
+        jLabel1.setText("DATA TRANSAKSI PENYEWAAN");
         jPanel1.add(jLabel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -80,7 +77,7 @@ public class TarifView extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Cari");
 
-        comboCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kode Mobil", "Golongan Tarif" }));
+        comboCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kode Transaksi", "Nama", "Alamat", "Telepon", "Jaminan", "Tgl Keluar", "Tgl Kembali", "Tanggal Transaksi", "Kasir" }));
         comboCari.setToolTipText("Cari Mobil Berdasarkan");
 
         textCari.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -170,7 +167,7 @@ public class TarifView extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel2)
@@ -254,9 +251,6 @@ public class TarifView extends javax.swing.JInternalFrame {
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
 
-        TransaksiPenyewaanView.labelTitle.setText("TAMBAH TARIF");
-        ViewUtil.showForm(desktopPaneUtama, this, tambahUbah);
-        TransaksiPenyewaanView.clearField();
         
     }//GEN-LAST:event_buttonTambahActionPerformed
 
@@ -332,8 +326,7 @@ public class TarifView extends javax.swing.JInternalFrame {
                 buttonHapus.setEnabled(true);
               
                 //Pass data ke TarifTambahUbah
-                TransaksiPenyewaanView.textKodeTransaksiSewa.setText(tarif.getKode_mobil());
-                TransaksiPenyewaanView.textKodeTarif.setText(tarif.getGol_tarif());        
+               
             }
         });
     }
@@ -356,7 +349,7 @@ public class TarifView extends javax.swing.JInternalFrame {
         //Ambil Data dari Database
         loadDatabase();
         //Disable Button
-        TransaksiPenyewaanView.buttonSimpan.setEnabled(false);
+       
         textCari.setText("");
         tableData.clearSelection();
         buttonUbah.setEnabled(false);

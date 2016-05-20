@@ -1,10 +1,11 @@
-package id.arief.sirmi.master.mobil;
+package id.arief.sirmi.master.karyawan;
 
+import id.arief.sirmi.master.mobil.*;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.MessageUtil;
 import id.arief.sirmi.util.ViewUtil;
 import static id.arief.sirmi.home.HomeView.desktopPaneUtama;
-import static id.arief.sirmi.home.HomeView.menuItemMasterMobil;
+import static id.arief.sirmi.home.HomeView.menuItemKaryawan;
 import id.arief.sirmi.util.TableUtil;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,13 +16,12 @@ import org.jdesktop.xswingx.PromptSupport;
  *
  * @author arief-asus
  */
-public class MobilView extends javax.swing.JInternalFrame {
-
-    MobilTableModel mobilTableModel = new MobilTableModel();
-    MobilController mobilPresenter = new MobilController();
-    MobilTambahUbah mobilTambahUbah = new MobilTambahUbah();
-
-    public MobilView() {
+public class KaryawanView extends javax.swing.JInternalFrame {
+    KaryawanTableModel tableModel = new KaryawanTableModel();
+    KaryawanController controller = new KaryawanController();
+    KaryawanTambahUbah karyawanTambahUbah = new KaryawanTambahUbah();
+   
+    public KaryawanView() {
         initComponents();
     }
 
@@ -34,10 +34,10 @@ public class MobilView extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        comboCariMobil = new javax.swing.JComboBox<>();
-        textCariMobil = new javax.swing.JTextField();
+        comboCari = new javax.swing.JComboBox<>();
+        textCari = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableMobil = new javax.swing.JTable();
+        tableData = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         buttonTambah = new javax.swing.JButton();
         buttonUbah = new javax.swing.JButton();
@@ -69,7 +69,7 @@ public class MobilView extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+13));
-        jLabel1.setText("MASTER MOBIL");
+        jLabel1.setText("MASTER KARYAWAN");
         jPanel1.add(jLabel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -77,23 +77,23 @@ public class MobilView extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Cari");
 
-        comboCariMobil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nama Mobil", "Merk", "Nopol", "Jenis", "Tahun Buat", "Kode Mobil" }));
-        comboCariMobil.setToolTipText("Cari Mobil Berdasarkan");
+        comboCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kode Karyawan", "Nama", "Tanggal Lahir", "No Telepon" }));
+        comboCari.setToolTipText("Cari Mobil Berdasarkan");
 
-        textCariMobil.addFocusListener(new java.awt.event.FocusAdapter() {
+        textCari.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                textCariMobilFocusGained(evt);
+                textCariFocusGained(evt);
             }
         });
-        textCariMobil.addKeyListener(new java.awt.event.KeyAdapter() {
+        textCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                textCariMobilKeyReleased(evt);
+                textCariKeyReleased(evt);
             }
         });
 
-        tableMobil.setAutoCreateRowSorter(true);
-        tableMobil.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        tableMobil.setModel(new javax.swing.table.DefaultTableModel(
+        tableData.setAutoCreateRowSorter(true);
+        tableData.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tableData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -104,14 +104,14 @@ public class MobilView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tableMobil.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        tableMobil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tableMobil.setEditingColumn(1);
-        tableMobil.setEditingRow(1);
-        tableMobil.setFocusTraversalPolicyProvider(true);
-        tableMobil.setGridColor(new java.awt.Color(0, 0, 0));
-        tableMobil.setName(""); // NOI18N
-        jScrollPane1.setViewportView(tableMobil);
+        tableData.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableData.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tableData.setEditingColumn(1);
+        tableData.setEditingRow(1);
+        tableData.setFocusTraversalPolicyProvider(true);
+        tableData.setGridColor(new java.awt.Color(0, 0, 0));
+        tableData.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tableData);
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -172,9 +172,9 @@ public class MobilView extends javax.swing.JInternalFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboCariMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboCari, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textCariMobil))
+                        .addComponent(textCari))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -184,8 +184,8 @@ public class MobilView extends javax.swing.JInternalFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(comboCariMobil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textCariMobil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -219,7 +219,7 @@ public class MobilView extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
 
-        PromptSupport.setPrompt("Masukkan Kata Kunci", textCariMobil);
+        PromptSupport.setPrompt("Masukkan Kata Kunci", textCari);
         
         buttonTambah.setIcon(IconUtil.setIconTambah());
         buttonUbah.setIcon(IconUtil.setIconEdit());
@@ -227,13 +227,12 @@ public class MobilView extends javax.swing.JInternalFrame {
         buttonClear.setIcon(IconUtil.setIconReset());
         buttonKeluar.setIcon(IconUtil.setIconKeluar());
        
-        tableMobil.setModel(mobilTableModel);
+        tableData.setModel(tableModel);
        
-        TableUtil.kolomRataTengah(tableMobil, 1);
-        TableUtil.kolomRataTengah(tableMobil, 6);
-        TableUtil.tabelKosong(tableMobil, mobilTableModel);
+        TableUtil.kolomRataTengah(tableData, 1);
+        TableUtil.tabelKosong(tableData, tableModel);
         refresh();
-        TableUtil.resizeColumnWidth(tableMobil);
+        TableUtil.resizeColumnWidth(tableData);
       
 
         tableMobilAction();
@@ -246,59 +245,50 @@ public class MobilView extends javax.swing.JInternalFrame {
 
     private void buttonKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKeluarActionPerformed
         dispose();
-        menuItemMasterMobil.setEnabled(true);
+        menuItemKaryawan.setEnabled(true);
     }//GEN-LAST:event_buttonKeluarActionPerformed
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
-        MobilTambahUbah.labelTitleTambahUbahMobil.setText("TAMBAH MOBIL");
-        ViewUtil.showForm(desktopPaneUtama, this, mobilTambahUbah);
-        MobilTambahUbah.textKodeMobil.setText("<Otomatis>");
-        MobilTambahUbah.clearField();
+        KaryawanTambahUbah.labelTitleTambahUbahKaryawan.setText("TAMBAH KARYAWAN");
+        ViewUtil.showForm(desktopPaneUtama, this, karyawanTambahUbah);
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
-        MobilTambahUbah.labelTitleTambahUbahMobil.setText("UBAH MOBIL");
-        ViewUtil.showForm(desktopPaneUtama, this, mobilTambahUbah);
+        KaryawanTambahUbah.labelTitleTambahUbahKaryawan.setText("UBAH KARYAWAN");
+        ViewUtil.showForm(desktopPaneUtama, this, karyawanTambahUbah);
     }//GEN-LAST:event_buttonUbahActionPerformed
 
-    private void textCariMobilKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCariMobilKeyReleased
+    private void textCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCariKeyReleased
         try {
             String sqlParameter = null;
             String searchParameter;
-            switch (comboCariMobil.getSelectedIndex()) {
+            switch (comboCari.getSelectedIndex()) {
                 case 0:
-                    sqlParameter = "nama_mobil";
+                    sqlParameter = "kode_karyawan";
                     break;
                 case 1:
-                    sqlParameter = "merk_mobil";
+                    sqlParameter = "nama_karyawan";
                     break;
                 case 2:
-                    sqlParameter = "nopol_mobil";
+                    sqlParameter = "tanggal_lahir";
                     break;
                 case 3:
-                    sqlParameter = "jenis_mobil";
-                    break;
-                case 4:
-                    sqlParameter = "tahun_pembuatan";
-                    break;
-                case 5:
-                    sqlParameter = "kode_mobil";
+                    sqlParameter = "kontak_karyawan";
                     break;
             }
 
-            searchParameter = textCariMobil.getText();
-            List<Mobil> list = mobilPresenter
-                    .getMobilByParameter(sqlParameter, searchParameter);
-            mobilTableModel.setData(list);
+            searchParameter = textCari.getText();
+            List<Karyawan> list = controller.getKaryawanByParameter(sqlParameter, searchParameter);
+            tableModel.setData(list);
         } catch (Exception error) {
             System.out.println("Terjadi kesalahan : \n& " + error);
             JOptionPane.showMessageDialog(this, "Terjadi kesalahan : ");
         }
-    }//GEN-LAST:event_textCariMobilKeyReleased
+    }//GEN-LAST:event_textCariKeyReleased
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
         int confirm = MessageUtil.
-                showConfirmMessage("Apakah anda ingin menghapus mobil dengan nopol " + textNopol.getText() + " ?", this);
+                showConfirmMessage("Apakah anda ingin menghapus karyawan dengan kode " + textNopol.getText() + " ?", this);
         if (confirm == JOptionPane.YES_OPTION) {
           
         } else if (confirm == JOptionPane.NO_OPTION) {
@@ -306,9 +296,9 @@ public class MobilView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_buttonHapusActionPerformed
 
-    private void textCariMobilFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCariMobilFocusGained
+    private void textCariFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCariFocusGained
         buttonClear.doClick();
-    }//GEN-LAST:event_textCariMobilFocusGained
+    }//GEN-LAST:event_textCariFocusGained
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">           
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,38 +307,36 @@ public class MobilView extends javax.swing.JInternalFrame {
     private javax.swing.JButton buttonKeluar;
     private javax.swing.JButton buttonTambah;
     private javax.swing.JButton buttonUbah;
-    private javax.swing.JComboBox<String> comboCariMobil;
+    private javax.swing.JComboBox<String> comboCari;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tableMobil;
-    private javax.swing.JTextField textCariMobil;
+    public static javax.swing.JTable tableData;
+    private javax.swing.JTextField textCari;
     private javax.swing.JTextField textNopol;
     // End of variables declaration//GEN-END:variables
     public void tableMobilAction() {
-        tableMobil
+        tableData
                 .getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            int row = tableMobil.getSelectedRow();
+            int row = tableData.getSelectedRow();
             //Cek Baris, Apakah terseleksi?
             if (row != -1) {
-                
-                Mobil mobil = mobilTableModel.get(row);
+                Karyawan karyawan = tableModel.get(row);
+               
                 //Disable Button Tambah
                 buttonTambah.setEnabled(false);
                 buttonUbah.setEnabled(true);
                 buttonHapus.setEnabled(true);
-                //set textNopol
-                textNopol.setText(mobil.getNopol_mobil());
+                
                 //Pass data ke MobilTambahUbah
-                MobilTambahUbah.textKodeMobil.setText(mobil.getKode_mobil());
-                MobilTambahUbah.textNopol.setText(mobil.getNopol_mobil());
-                MobilTambahUbah.textMerk.setText(mobil.getMerk_mobil());
-                MobilTambahUbah.textNamaMobil.setText(mobil.getNama_mobil());
-                MobilTambahUbah.textJenisMobil.setText(mobil.getJenis_mobil());
-                MobilTambahUbah.textTahunMobil.setText(mobil.getTahun_pembuatan());
+                KaryawanTambahUbah.textKodeKaryawan.setText(karyawan.getKodeKaryawan());
+                KaryawanTambahUbah.textNamaKaryawan.setText(karyawan.getNamaKaryawan());
+                KaryawanTambahUbah.textTanggalLahirKaryawan.setDate(karyawan.getTanggalLahirKaryawan());
+                KaryawanTambahUbah.textTeleponKaryawan.setText(karyawan.getKontakKaryawan());
+                
             }
         });
     }
@@ -359,8 +347,8 @@ public class MobilView extends javax.swing.JInternalFrame {
      */
     public void loadDatabase() {
         try {
-            List<Mobil> list = mobilPresenter.getMobil();
-            mobilTableModel.setData(list);
+            List<Karyawan> list = controller.getData();
+            tableModel.setData(list);
         } catch (Exception error) {
             System.out.println("Terjadi kesalahan : \n& " + error);
             JOptionPane.showMessageDialog(this, "Terjadi kesalahan : ");
@@ -371,9 +359,9 @@ public class MobilView extends javax.swing.JInternalFrame {
         //Ambil Data dari Database
         loadDatabase();
         //Disable Button
-        MobilTambahUbah.buttonSimpan.setEnabled(false);
-        textCariMobil.setText("");
-        tableMobil.clearSelection();
+        KaryawanTambahUbah.buttonSimpan.setEnabled(false);
+        textCari.setText("");
+        tableData.clearSelection();
         buttonUbah.setEnabled(false);
         buttonHapus.setEnabled(false);
         buttonTambah.setEnabled(true);

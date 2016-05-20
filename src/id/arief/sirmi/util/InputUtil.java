@@ -21,6 +21,7 @@ public class InputUtil {
                 if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
                     evt.consume();
                     labelError.setText("Hanya Angka!");
+                    labelError.setIcon(IconUtil.setIconError());
                     labelError.setVisible(true);
                 } else {
                     labelError.setVisible(false);
@@ -109,6 +110,7 @@ public class InputUtil {
                 if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != KeyEvent.VK_BACK_SPACE && evt.getKeyChar() != KeyEvent.VK_TAB) {
                     evt.consume();
                     labelError.setText("Hanya Angka!");
+                    labelError.setIcon(IconUtil.setIconError());
                     labelError.setVisible(true);
                 } else if (!isTelpValid(textField)) {
                     evt.consume();

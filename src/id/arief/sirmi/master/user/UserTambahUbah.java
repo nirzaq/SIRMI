@@ -1,17 +1,12 @@
 package id.arief.sirmi.master.user;
 
+import id.arief.sirmi.home.HomeView;
 import id.arief.sirmi.master.mobil.*;
 import id.arief.sirmi.util.BatasKarakter;
 import id.arief.sirmi.util.MessageUtil;
 import static id.arief.sirmi.home.HomeView.desktopPaneUtama;
-import static id.arief.sirmi.home.HomeView.menuItemMasterMobil;
-import static id.arief.sirmi.home.HomeView.menuItemMasterUser;
 import id.arief.sirmi.util.IconUtil;
-import id.arief.sirmi.util.InputUtil;
 import java.awt.event.ItemEvent;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JPasswordField;
 
 /**
  *
@@ -268,7 +263,7 @@ public class UserTambahUbah extends javax.swing.JInternalFrame {
     private void buttonKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKeluarActionPerformed
         UserView userView = new UserView();
         desktopPaneUtama.add(userView);
-        menuItemMasterUser.setEnabled(false);
+        HomeView.menuItemTambahUser.setEnabled(false);
         userView.setVisible(true);
         dispose();
     }//GEN-LAST:event_buttonKeluarActionPerformed

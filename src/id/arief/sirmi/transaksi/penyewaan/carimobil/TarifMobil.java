@@ -15,6 +15,7 @@ public class TarifMobil {
     String jenis;
     String gol_tarif;
     String status;
+    int kodeTarif;
 
     public String getKode_mobil() {
         return kode_mobil;
@@ -95,4 +96,14 @@ public class TarifMobil {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public int getKodeTarif() {
+        return kodeTarif;
+    }
+
+    public void setKodeTarif(int kodeTarif) {
+        this.kodeTarif = kodeTarif;
+    }
+    
+    
 }

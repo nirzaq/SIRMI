@@ -1,33 +1,76 @@
 package id.arief.sirmi.transaksi.penyewaan;
 
+import java.sql.Date;
+
 /**
  *
  * @author arief-asus
  */
 public class Penyewaan {
-    String kode_transaksi;
-    String nama_penyewa;
+    String kodeTransaksi;
+    int kodeTarif;
+    String nama;
     String alamat;
     String telp;
-    JenisSewa jenisSewa;
-    String kode_mobil_sewa;
-    Jaminan jaminan;
-    int lama_hari_sewa;
+    String jaminan;
+    String tglJamKeluar;
+    String tglJamKembali;
+    Double biayaSewa;
+    int lamaSewa;
+    String tanggalTransaksi;
+    String kodeKaryawan;
+    String kodeMobil;
+    
+    private String pathReport;
+    private String resultReport;
+    private String sourceReport;
 
-    public String getKode_transaksi() {
-        return kode_transaksi;
+    public String getPathReport() {
+        return pathReport;
     }
 
-    public void setKode_transaksi(String kode_transaksi) {
-        this.kode_transaksi = kode_transaksi;
+    public void setPathReport(String pathReport) {
+        this.pathReport = pathReport;
     }
 
-    public String getNama_penyewa() {
-        return nama_penyewa;
+    public String getResultReport() {
+        return resultReport;
     }
 
-    public void setNama_penyewa(String nama_penyewa) {
-        this.nama_penyewa = nama_penyewa;
+    public void setResultReport(String resultReport) {
+        this.resultReport = resultReport;
+    }
+
+    public String getSourceReport() {
+        return sourceReport;
+    }
+
+    public void setSourceReport(String sourceReport) {
+        this.sourceReport = sourceReport;
+    }
+    
+    public String getKodeTransaksi() {
+        return kodeTransaksi;
+    }
+
+    public void setKodeTransaksi(String kodeTransaksi) {
+        this.kodeTransaksi = kodeTransaksi;
+    }
+
+    public int getKodeTarif() {
+        return kodeTarif;
+    }
+
+    public void setKodeTarif(int kodeTarif) {
+        this.kodeTarif = kodeTarif;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
     public String getAlamat() {
@@ -46,37 +89,69 @@ public class Penyewaan {
         this.telp = telp;
     }
 
-    public JenisSewa getJenisSewa() {
-        return jenisSewa;
-    }
-
-    public void setJenisSewa(JenisSewa jenisSewa) {
-        this.jenisSewa = jenisSewa;
-    }
-
-    public String getKode_mobil_sewa() {
-        return kode_mobil_sewa;
-    }
-
-    public void setKode_mobil_sewa(String kode_mobil_sewa) {
-        this.kode_mobil_sewa = kode_mobil_sewa;
-    }
-
-    public Jaminan getJaminan() {
+    public String getJaminan() {
         return jaminan;
     }
 
-    public void setJaminan(Jaminan jaminan) {
+    public void setJaminan(String jaminan) {
         this.jaminan = jaminan;
     }
 
-    public int getLama_hari_sewa() {
-        return lama_hari_sewa;
+    public String getTglJamKeluar() {
+        return tglJamKeluar;
     }
 
-    public void setLama_hari_sewa(int lama_hari_sewa) {
-        this.lama_hari_sewa = lama_hari_sewa;
+    public void setTglJamKeluar(String tglJamKeluar) {
+        this.tglJamKeluar = tglJamKeluar;
     }
-    
-    
+
+    public String getTglJamKembali() {
+        return tglJamKembali;
+    }
+
+    public void setTglJamKembali(String tglJamKembali) {
+        this.tglJamKembali = tglJamKembali;
+    }
+
+   
+
+    public Double getBiayaSewa() {
+        return biayaSewa;
+    }
+
+    public void setBiayaSewa(Double biayaSewa) {
+        this.biayaSewa = biayaSewa;
+    }
+
+    public int getLamaSewa() {
+        return lamaSewa;
+    }
+
+    public void setLamaSewa(int lamaSewa) {
+        this.lamaSewa = lamaSewa;
+    }
+
+    public String getTanggalTransaksi() {
+        return tanggalTransaksi;
+    }
+
+    public void setTanggalTransaksi(String tanggalTransaksi) {
+        this.tanggalTransaksi = tanggalTransaksi;
+    }
+
+    public String getKodeKaryawan() {
+        return kodeKaryawan;
+    }
+
+    public void setKodeKaryawan(String kodeKaryawan) {
+        this.kodeKaryawan = kodeKaryawan;
+    }
+
+    public String getKodeMobil() {
+        return kodeMobil;
+    }
+
+    public void setKodeMobil(String kodeMobil) {
+        this.kodeMobil = kodeMobil;
+    }
 }

@@ -63,7 +63,6 @@ public class MobilTambahUbah extends javax.swing.JInternalFrame {
         labelTitleTambahUbahMobil = new javax.swing.JLabel();
 
         setBorder(null);
-        setTitle("Master Mobil");
         setPreferredSize(new java.awt.Dimension(551, 432));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {

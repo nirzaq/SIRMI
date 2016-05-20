@@ -1,4 +1,4 @@
-package id.arief.sirmi.transaksi.penyewaan.carimobil;
+package id.arief.sirmi.master.karyawan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +8,15 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author arief-asus
  */
-public class TarifMobilTableModel extends AbstractTableModel {
-    private List<TarifMobil> list = new ArrayList<>();
+public class KaryawanTableModel extends AbstractTableModel {
+     private List<Karyawan> list = new ArrayList<>();
     
-    public void setData(List<TarifMobil>list){
+    public void setData(List<Karyawan>list){
         this.list = list;
         fireTableDataChanged();
     }
     
-    public TarifMobil get(int row){
+    public Karyawan get(int row){
         return list.get(row);
     }
     
@@ -27,7 +27,7 @@ public class TarifMobilTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 5;
     }
 
     @Override
@@ -36,21 +36,13 @@ public class TarifMobilTableModel extends AbstractTableModel {
             case 0:
                 return rowIndex+1;
             case 1:
-                return list.get(rowIndex).getKode_mobil();
+                return list.get(rowIndex).getKodeKaryawan();
             case 2:
-                return list.get(rowIndex).getNama_mobil();
+                return list.get(rowIndex).getNamaKaryawan();
             case 3:
-                return list.get(rowIndex).getMerk_mobil();
+                return list.get(rowIndex).getTanggalLahirKaryawan();
             case 4:
-                return list.get(rowIndex).getNopol();
-            case 5:
-                return list.get(rowIndex).getJenis_mobil();
-            case 6:
-                return list.get(rowIndex).getTahun();
-            case 7:
-                return list.get(rowIndex).getTarif();
-            case 8:
-                return list.get(rowIndex).getKodeTarif();
+                return list.get(rowIndex).getKontakKaryawan();
             default:
                 return null;
         }
@@ -62,19 +54,13 @@ public class TarifMobilTableModel extends AbstractTableModel {
             case 0:
                 return "No";
             case 1:
-                return "Kode Mobil";
+                return "Kode";
             case 2:
                 return "Nama";
             case 3:
-                return "Merk";
+                return "Tanggal Lahir";
             case 4:
-                return "Nopol";
-            case 5:
-                return "Jenis";
-            case 6:
-                return "Tahun";
-            case 7:
-                return "Tarif";
+                return "No Telepon";
             default:
                 return null;
         }

@@ -259,16 +259,18 @@ public class LoginView extends javax.swing.JFrame {
                     //Buka Form Utama
                     //Cek Hak Akses
                     String hak_akses = login.getKategori_user();
-
+                    String kode_karyawan = login.getKode_karyawan();
                     if (hak_akses.equals("Karyawan")) {
-                        System.out.print("IF Jalan");
                         HomeView homeView = new HomeView();
                         labelUsername.setText(username);
-
+                        HomeView.labelKodeKaryawan.setText(kode_karyawan);
+                        HomeView.labelHakAkses.setText("Karyawan");
                         homeView.setVisible(true);
                     } else {
                         HomeView homeView = new HomeView();
                         labelUsername.setText(username);
+                        HomeView.labelKodeKaryawan.setText(kode_karyawan);
+                         HomeView.labelHakAkses.setText("Admin");
                         homeView.setVisible(true);
                     }
                 }

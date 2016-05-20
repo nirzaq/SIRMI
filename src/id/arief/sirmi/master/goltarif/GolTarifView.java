@@ -1,10 +1,7 @@
 package id.arief.sirmi.master.goltarif;
 
-import id.arief.sirmi.master.mobil.*;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.MessageUtil;
-import id.arief.sirmi.util.ViewUtil;
-import static id.arief.sirmi.home.HomeView.desktopPaneUtama;
 import static id.arief.sirmi.home.HomeView.menuItemMasterMobil;
 import id.arief.sirmi.util.TableUtil;
 import java.util.List;
@@ -70,7 +67,7 @@ public class GolTarifView extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+13));
-        jLabel1.setText("MASTER TARIF");
+        jLabel1.setText("MASTER GOLONGAN TARIF");
         jPanel1.add(jLabel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -230,8 +227,6 @@ public class GolTarifView extends javax.swing.JInternalFrame {
        
         tableData.setModel(tableModel);
        
-//        TableUtil.kolomRataTengah(tableData, 1);
-//        TableUtil.kolomRataTengah(tableData, 6);
         TableUtil.tabelKosong(tableData, tableModel);
         refresh();
         TableUtil.resizeColumnWidth(tableData);

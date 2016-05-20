@@ -20,7 +20,7 @@ public class LoginController {
      */
     public Login getLoginDanHakAkses(String username, String password) throws Exception {
 
-        String sqlSelect = "SELECT * FROM m_user WHERE username = '" + username + "' AND password = '" + password + "'";
+        String sqlSelect = "SELECT * FROM t_user WHERE username = '" + username + "' AND password = '" + password + "'";
         Statement statement;
         ResultSet resultSet;
 
@@ -31,7 +31,7 @@ public class LoginController {
             Login login = new Login();
 
             if (resultSet.next()) {
-                login.setKode_karyawan(resultSet.getString("kode_user"));
+                login.setKode_karyawan(resultSet.getString("kode_karyawan"));
                 login.setUsername(resultSet.getString("username"));
                 login.setKategori_user(resultSet.getString("hak_akses"));
                 System.out.print(login.getKategori_user());

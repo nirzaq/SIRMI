@@ -1,16 +1,9 @@
 package id.arief.sirmi.transaksi.penyewaan.carimobil;
 
-import id.arief.sirmi.master.mobil.MobilController;
 import id.arief.sirmi.transaksi.penyewaan.TransaksiPenyewaanController;
 import id.arief.sirmi.transaksi.penyewaan.TransaksiPenyewaanView;
 import id.arief.sirmi.util.TableUtil;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Timer;
-import javax.swing.event.ListSelectionEvent;
 
 /**
  *
@@ -19,8 +12,10 @@ import javax.swing.event.ListSelectionEvent;
 public class CariMobilView extends javax.swing.JInternalFrame {
     public static String jenisTarif;
     TarifMobilTableModel tableModel = new TarifMobilTableModel();
-    MobilController controller = new MobilController();
+   
     TransaksiPenyewaanController penyewaanController = new TransaksiPenyewaanController();
+    public static boolean per12;
+    public static boolean perHari;
     public CariMobilView() {
         initComponents();
     }
@@ -185,11 +180,8 @@ public class CariMobilView extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         tableData.setModel(tableModel);
-        loadDatabase();
-        
+        loadDatabase();        
         TableUtil.resizeColumnWidth(tableData);
-        
-        //tableMobilAction();
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void tableDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDataMouseClicked
@@ -198,9 +190,15 @@ public class CariMobilView extends javax.swing.JInternalFrame {
             int row = tableData.getSelectedRow();
             TarifMobil tarifMobil = tableModel.get(row);
                 TransaksiPenyewaanView.textCariMobil.setText(tarifMobil.getKode_mobil());
-                //TransaksiPenyewaanView.labelBiayaSewa.setText("Rp."+String.valueOf(tarifMobil.getTarif()));
                 TransaksiPenyewaanView.biayaSewa = tarifMobil.getTarif();
-                dispose();    
+                TransaksiPenyewaanView.kodeTarif = tarifMobil.getKodeTarif();
+                if (per12) {
+                TransaksiPenyewaanView.labelBiayaSewa.setText("Rp."+String.valueOf(tarifMobil.getTarif()));
+                dispose();
+                } else {
+                    dispose();
+                }
+                    
         }
     }//GEN-LAST:event_tableDataMouseClicked
 

@@ -7,9 +7,18 @@ import id.arief.sirmi.transaksi.tarifmobil.*;
 import id.arief.sirmi.util.BatasKarakter;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.InputUtil;
+import id.arief.sirmi.util.MessageUtil;
 import id.arief.sirmi.util.TabIndex;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.swing.JRViewer;
+import net.sf.jasperreports.view.JasperViewer;
+import org.codehaus.groovy.control.messages.Message;
 
 /**
  *
@@ -18,8 +27,11 @@ import java.util.logging.Logger;
 public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
 
     TarifController tarifController = new TarifController();
+    TransaksiPenyewaanController controller = new TransaksiPenyewaanController();
     boolean valid;
     public static double biayaSewa;
+    public static int kodeTarif;
+    double totalBiayaSewa;
 
     public TransaksiPenyewaanView() {
         initComponents();
@@ -105,6 +117,12 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
         textKodeTransaksi.setEnabled(false);
 
         jLabel2.setText("Nama");
+
+        textNamaPenyewa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textNamaPenyewaKeyReleased(evt);
+            }
+        });
 
         jLabel3.setText("Alamat");
 
@@ -193,6 +211,7 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Bayar");
 
+        textBayar.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textBayar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 textBayarKeyReleased(evt);
@@ -204,12 +223,16 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
         labelKembalian.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         labelKembalian.setText("-");
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setPreferredSize(new java.awt.Dimension(355, 23));
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         buttonSimpan.setText("Simpan");
         buttonSimpan.setEnabled(false);
+        buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSimpanActionPerformed(evt);
+            }
+        });
         jPanel3.add(buttonSimpan);
 
         buttonReset.setText("Reset");
@@ -241,62 +264,63 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
             panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInputLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInputLayout.createSequentialGroup()
-                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textKodeTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1)
-                            .addComponent(textNamaPenyewa)
-                            .addComponent(textNoTelp)
-                            .addGroup(panelInputLayout.createSequentialGroup()
-                                .addComponent(radioPer12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(radioPerHari)
-                                .addGap(30, 30, 30)))
-                        .addGap(18, 21, Short.MAX_VALUE)
+                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelInputLayout.createSequentialGroup()
-                                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
+                                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(textKodeTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(textNamaPenyewa)
+                                    .addComponent(textNoTelp)
+                                    .addGroup(panelInputLayout.createSequentialGroup()
+                                        .addComponent(radioPer12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(radioPerHari)
+                                        .addGap(30, 30, 30)))
+                                .addGap(18, 21, Short.MAX_VALUE)
                                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboJaminan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panelInputLayout.createSequentialGroup()
-                                        .addComponent(textLamaSewa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelLamaSewa))
+                                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel6))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(panelInputLayout.createSequentialGroup()
+                                                .addComponent(textLamaSewa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(labelLamaSewa))
+                                            .addComponent(comboJaminan, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(panelInputLayout.createSequentialGroup()
+                                                .addComponent(textCariMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(buttonCariMobil))))
                                     .addGroup(panelInputLayout.createSequentialGroup()
-                                        .addComponent(textCariMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(buttonCariMobil))))
+                                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel10)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jLabel12))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(labelBiayaSewa)
+                                            .addComponent(labelKembalian)
+                                            .addComponent(textBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addContainerGap(53, Short.MAX_VALUE))
                             .addGroup(panelInputLayout.createSequentialGroup()
-                                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12))
-                                .addGap(18, 18, 18)
-                                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelBiayaSewa)
-                                    .addComponent(labelKembalian)
-                                    .addComponent(textBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(53, Short.MAX_VALUE))
-                    .addGroup(panelInputLayout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(labelErrorInput)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                                .addGap(105, 105, 105)
+                                .addComponent(labelErrorInput)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInputLayout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         panelInputLayout.setVerticalGroup(
             panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,19 +329,17 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(textKodeTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(comboJaminan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(textNamaPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(textCariMobil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonCariMobil))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(textNamaPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(comboJaminan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelInputLayout.createSequentialGroup()
                         .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -327,13 +349,13 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
                         .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(labelBiayaSewa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
                         .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(textBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textNoTelp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
@@ -410,8 +432,11 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
         textLamaSewa.setEnabled(false);
         labelLamaSewa.setText("Jam");
         labelLamaSewa.setVisible(true);
-        buttonCariMobil.setEnabled(true);
+        comboJaminan.setEnabled(true);
         CariMobilView.jenisTarif = "Per 12 Jam";
+        CariMobilView.per12 = true;
+        CariMobilView.perHari = false;
+
     }//GEN-LAST:event_radioPer12ItemStateChanged
 
     private void radioPerHariItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_radioPerHariItemStateChanged
@@ -420,12 +445,14 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
         textLamaSewa.setDocument(new BatasKarakter(2));
         labelLamaSewa.setText("Hari");
         labelLamaSewa.setVisible(true);
-        buttonCariMobil.setEnabled(true);
+        comboJaminan.setEnabled(true);
         CariMobilView.jenisTarif = "Per Hari";
+        CariMobilView.per12 = false;
+        CariMobilView.perHari = true;
     }//GEN-LAST:event_radioPerHariItemStateChanged
 
     private void textAreaAlamatKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textAreaAlamatKeyReleased
-
+        cekField();
     }//GEN-LAST:event_textAreaAlamatKeyReleased
 
     private void textAreaAlamatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textAreaAlamatKeyPressed
@@ -452,9 +479,11 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
 
     private void comboJaminanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboJaminanItemStateChanged
         if (radioPerHari.isSelected()) {
+            buttonCariMobil.setEnabled(true);
             textLamaSewa.requestFocus();
         } else {
-            textBayar.requestFocus();
+            buttonCariMobil.setEnabled(true);
+            
         }
     }//GEN-LAST:event_comboJaminanItemStateChanged
 
@@ -472,22 +501,46 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
 
         if (InputUtil.isTelpValid(textNoTelp)) {
             labelErrorInput.setVisible(false);
-        } else if (textNoTelp.getText().length() != 0) {
+            radioPer12.setEnabled(true);
+            radioPerHari.setEnabled(true);
+            cekField();
+        } else if (textNoTelp.getText().length() != 0 || textNoTelp.getText().length() == 0) {
 
             labelErrorInput.setIcon(IconUtil.setIconError());
             labelErrorInput.setText("Harap Masukkan Format Telp/HP yang benar!");
             labelErrorInput.setVisible(true);
+            radioPer12.setEnabled(false);
+            radioPerHari.setEnabled(false);
+            cekField();
 
         } else {
             labelErrorInput.setVisible(false);
+            radioPer12.setEnabled(true);
+            radioPerHari.setEnabled(true);
         }
 
     }//GEN-LAST:event_textNoTelpKeyReleased
 
     private void textBayarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBayarKeyReleased
-        if (textBayar.getText().length() > 0 && textLamaSewa.getText() != null) {
+        if (textBayar.getText().length() > 0 && radioPerHari.isSelected()) {
+            System.out.println("IF JALAN Hari");
             double lamaSewa = Double.parseDouble(textLamaSewa.getText());
-            double totalBiayaSewa = biayaSewa * lamaSewa;
+            totalBiayaSewa = biayaSewa * lamaSewa;
+            double bayar = Double.parseDouble(textBayar.getText());
+            double kembali = bayar - totalBiayaSewa;
+            if (kembali < 0) {
+                labelErrorInput.setText("Bayar Kurang dari Biaya Sewa!");
+                labelErrorInput.setVisible(true);
+                labelKembalian.setText("-");
+                cekField();
+            } else {
+                labelErrorInput.setVisible(false);
+                labelKembalian.setText("Rp." + String.valueOf(kembali));
+                cekField();
+            }
+        } else if (textBayar.getText().length() > 0 && textLamaSewa.getText().equals("12"))  {
+            System.out.println("IF JALAN 12");
+            totalBiayaSewa = biayaSewa;
             double bayar = Double.parseDouble(textBayar.getText());
             double kembali = bayar - totalBiayaSewa;
             if (kembali < 0) {
@@ -507,7 +560,7 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
         if (textLamaSewa.getText().length() != 0 && Integer.parseInt(textLamaSewa.getText()) <= 7) {
             double hari = Double.parseDouble(textLamaSewa.getText());
             double totalBayar = biayaSewa * hari;
-            labelBiayaSewa.setText("Rp."+String.valueOf(totalBayar));
+            labelBiayaSewa.setText("Rp." + String.valueOf(totalBayar));
             labelErrorInput.setVisible(false);
             cekField();
         } else {
@@ -517,31 +570,66 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
             labelBiayaSewa.setText("-");
             cekField();
         }
-
-
     }//GEN-LAST:event_textLamaSewaKeyReleased
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
+        buttonGroupJenisSewa.clearSelection();
+        textLamaSewa.setText("");
+        labelLamaSewa.setVisible(false);
         buttonSimpan.setEnabled(false);
         labelErrorInput.setVisible(false);
         labelBiayaSewa.setText("-");
-        labelLamaSewa.setVisible(false);
-        textLamaSewa.setText("");
         labelKembalian.setText("-");
         textBayar.setText("");
         comboJaminan.setSelectedIndex(-1);
-        buttonCariMobil.setEnabled(true);
+        buttonCariMobil.setEnabled(false);
         textCariMobil.setText("");
-        radioPer12.setEnabled(true);
-        radioPer12.setSelected(true);
-        radioPerHari.setEnabled(true);
-        radioPerHari.setSelected(false);
+
+        radioPer12.setEnabled(false);
+        radioPerHari.setEnabled(false);
+
         textNoTelp.setText("");
         textAreaAlamat.setText("");
         textNamaPenyewa.setText("");
         textNamaPenyewa.requestFocus();
     }//GEN-LAST:event_buttonResetActionPerformed
 
+    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormatIndo = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+        Calendar calendar = Calendar.getInstance();
+        String tanggalTransaksi = dateFormat.format(calendar.getTime());
+        
+        System.out.println(dateFormatIndo.format(calendar.getTime()));
+        Penyewaan p = new Penyewaan();
+        p.setKodeTarif(kodeTarif);
+        p.setNama(textNamaPenyewa.getText());
+        p.setAlamat(textAreaAlamat.getText());
+        p.setTelp(textNoTelp.getText());
+        p.setJaminan(comboJaminan.getSelectedItem().toString());
+        p.setTglJamKeluar(tanggalTransaksi);
+        if (radioPerHari.isSelected()) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            p.setTglJamKembali(dateFormat.format(calendar.getTime()));
+        } else {
+            calendar.add(Calendar.HOUR_OF_DAY, 12);
+            p.setTglJamKembali(dateFormat.format(calendar.getTime()));
+        }
+       
+        p.setBiayaSewa(totalBiayaSewa);
+        p.setTanggalTransaksi(tanggalTransaksi);
+        p.setKodeKaryawan(HomeView.labelKodeKaryawan.getText());
+        controller.tambahTransaksiSewa(p);
+        //controller.setStatusMobilNA(textCariMobil.getText());
+        JasperPrint jasperPrint = controller.cetakNotaSewa("NotaSewa");
+        buttonReset.doClick();
+        JasperViewer.viewReport(jasperPrint, false);
+        
+    }//GEN-LAST:event_buttonSimpanActionPerformed
+
+    private void textNamaPenyewaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNamaPenyewaKeyReleased
+        cekField();
+    }//GEN-LAST:event_textNamaPenyewaKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Container;
@@ -583,7 +671,8 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField textNamaPenyewa;
     private javax.swing.JTextField textNoTelp;
     // End of variables declaration//GEN-END:variables
-private void viewSetup() {
+
+    private void viewSetup() {
         setTabIndex();
         //Set Visible False Component
         labelErrorInput.setVisible(false);
@@ -592,13 +681,19 @@ private void viewSetup() {
         //Set Radio Ke Grup
         buttonGroupJenisSewa.add(radioPer12);
         buttonGroupJenisSewa.add(radioPerHari);
+        radioPer12.setEnabled(false);
+        radioPerHari.setEnabled(false);
         InputUtil.setValidNama(textNamaPenyewa, labelErrorInput);
         InputUtil.setNumericOnlyNoError(textNoTelp);
         InputUtil.setNumericOnlyNoError(textLamaSewa);
+        InputUtil.setNumericOnly(textBayar, labelErrorInput);
         textNoTelp.setDocument(new BatasKarakter(13));
-        textLamaSewa.setText("12");
-
+        
         //Set Icon Button
+        buttonSimpan.setIcon(IconUtil.setIconSimpan());
+        buttonReset.setIcon(IconUtil.setIconReset());
+        buttonTabelTransaksi.setIcon(IconUtil.setIconTable());
+        buttonKeluar.setIcon(IconUtil.setIconKeluar());
     }
 
     private void setTabIndex() {
@@ -608,15 +703,11 @@ private void viewSetup() {
         tabIndex.addIndexedComponent(textNoTelp);
         tabIndex.addIndexedComponent(radioPer12);
         tabIndex.addIndexedComponent(radioPerHari);
-        tabIndex.addIndexedComponent(buttonCariMobil);
         tabIndex.addIndexedComponent(comboJaminan);
-        //tabIndex.addIndexedComponent(textLamaSewa);
-
-        //tabIndex.addIndexedComponent(textBayar);
+         tabIndex.addIndexedComponent(buttonCariMobil);
         tabIndex.addIndexedComponent(buttonSimpan);
         tabIndex.addIndexedComponent(buttonReset);
         setFocusTraversalPolicy(tabIndex);
-
     }
 
     private void cekField() {
@@ -638,4 +729,21 @@ private void viewSetup() {
             buttonSimpan.setEnabled(true);
         }
     }
+    
+    public String setFormatUangIndo(double nilai) {
+        
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("Rp.");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        String nilaiUang = kursIndonesia.format(nilai);
+        return nilaiUang;
+    }
+
+    
+    
 }

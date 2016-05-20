@@ -15,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     public List<User> getData() {
-        String sqlSelect = "SELECT * FROM m_user WHERE username != 'Admin'";
+        String sqlSelect = "SELECT * FROM t_user WHERE username != 'Admin'";
         Statement statement;
         ResultSet resultSet;
         try {
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     public List<User> getDataByParameter(String sqlParam, String searchParam) {
-        String sqlSelect = "SELECT * FROM m_user WHERE " + sqlParam + " LIKE '%" + searchParam + "%' AND username != 'Admin'";
+        String sqlSelect = "SELECT * FROM t_user WHERE " + sqlParam + " LIKE '%" + searchParam + "%' AND username != 'Admin'";
         Statement statement = null;
         ResultSet resultSet;
         try {
@@ -66,7 +66,7 @@ public class UserController {
 
     public void tambahData(User user) {
         try {
-            String sql_tambah = "INSERT INTO m_user VALUES (?,?,?,?)";
+            String sql_tambah = "INSERT INTO t_user VALUES (?,?,?,?)";
             PreparedStatement ps;
             ps = Connection.getConnection().prepareStatement(sql_tambah);
             ps.setString(1, null);

@@ -117,12 +117,24 @@ public class MobilController {
             Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void deleteMobil() {
-        String sqlDelete = "DELETE FROM m_mobil WHERE kode_mobil = ?";
-        PreparedStatement preparedStatement = null;
-        
-        
+
+    public boolean deleteMobil(String kodeMobil) {
+        boolean isDeletable = false;
+        if (cekStatusMobil(kodeMobil)) {
+            try {
+                String sqlDelete = "DELETE FROM m_mobil WHERE kode_mobil = ?";
+                PreparedStatement ps;
+                ps = Connection.getConnection().prepareStatement(sqlDelete);
+                ps.setString(1, kodeMobil);
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            
+        }
+        return isDeletable = false;
+
     }
 
     public boolean cekMobil(String nopol) {
@@ -147,10 +159,10 @@ public class MobilController {
 
         return adaMobil;
     }
-    
-    public boolean cekNopol(String nopol,String kodeMobil) {
+
+    public boolean cekNopol(String nopol, String kodeMobil) {
         boolean adaMobil = false;
-        String sql_cek = "SELECT * FROM m_mobil WHERE nopol_mobil = '" + nopol + "' AND kode_mobil != '"+kodeMobil+"'";
+        String sql_cek = "SELECT * FROM m_mobil WHERE nopol_mobil = '" + nopol + "' AND kode_mobil != '" + kodeMobil + "'";
         Statement statement;
         ResultSet resultSet;
 
@@ -169,7 +181,6 @@ public class MobilController {
 
         return adaMobil;
     }
-
 
     public String idMobil() {
         String idMobil = null;
@@ -202,7 +213,27 @@ public class MobilController {
         }
         return idMobil;
     }
-    
-    
+
+    public boolean cekStatusMobil(String kodeMobil) {
+        boolean adaMobil = false;
+        String sql_cek = "SELECT * FROM t_tarif_mobil WHERE nopol_mobil = '" + kodeMobil + "' AND kode_mobil = 'AV'";
+        Statement statement;
+        ResultSet resultSet;
+
+        try {
+            statement = Connection.getConnection().createStatement();
+            resultSet = statement.executeQuery(sql_cek);
+            if (resultSet.first()) {
+                adaMobil = true;
+            } else {
+                adaMobil = false;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return adaMobil;
+    }
 
 }
