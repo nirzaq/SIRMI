@@ -1,10 +1,9 @@
-
-package id.arief.sirmi.laporan.master;
+package id.arief.sirmi.laporan.transaksi;
 
 import id.arief.sirmi.database.Connection;
 import id.arief.sirmi.home.HomeView;
+import static id.arief.sirmi.laporan.master.LaporanDataMasterView.buttonSimpan;
 import id.arief.sirmi.transaksi.penyewaan.Penyewaan;
-import id.arief.sirmi.util.IconUtil;
 import java.sql.SQLException;
 import java.util.HashMap;
 import net.sf.jasperreports.engine.JRException;
@@ -19,50 +18,38 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author arief-asus
  */
-public class LaporanDataMasterView extends javax.swing.JInternalFrame {
+public class LaporanTransaksiTarifMobil extends javax.swing.JInternalFrame {
 
-
-    public LaporanDataMasterView() {
+    public LaporanTransaksiTarifMobil() {
         initComponents();
-        buttonSimpan.setIcon(IconUtil.setIconPrint());
-        buttonKeluar.setIcon(IconUtil.setIconKeluar());
     }
 
-
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        comboMaster = new javax.swing.JComboBox<>();
         buttons = new javax.swing.JPanel();
         buttonSimpan = new javax.swing.JButton();
         buttonKeluar = new javax.swing.JButton();
+        comboJenisTarif = new javax.swing.JComboBox<>();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD, jLabel1.getFont().getSize()+13));
-        jLabel1.setText("LAPORAN DATA MASTER");
+        jLabel1.setText("LAPORAN TARIF MOBIL");
         jPanel1.add(jLabel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setText("Pilih Data");
-
-        comboMaster.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Karyawan", "Mobil", "Golongan Tarif" }));
-        comboMaster.setSelectedIndex(-1);
-        comboMaster.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboMasterItemStateChanged(evt);
-            }
-        });
+        jLabel2.setText("Jenis Tarif");
 
         buttons.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         buttons.setPreferredSize(new java.awt.Dimension(355, 25));
-        buttons.setLayout(new java.awt.GridLayout(1, 0));
+        buttons.setLayout(new java.awt.GridLayout());
 
         buttonSimpan.setText("Cetak");
         buttonSimpan.setToolTipText("Simpan");
@@ -83,20 +70,27 @@ public class LaporanDataMasterView extends javax.swing.JInternalFrame {
         });
         buttons.add(buttonKeluar);
 
+        comboJenisTarif.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Per 12 Jam", "Per Hari" }));
+        comboJenisTarif.setSelectedIndex(-1);
+        comboJenisTarif.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboJenisTarifItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboMaster, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboJenisTarif, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +98,7 @@ public class LaporanDataMasterView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(comboMaster, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboJenisTarif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -117,7 +111,7 @@ public class LaporanDataMasterView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -135,58 +129,61 @@ public class LaporanDataMasterView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
-        String namaReport = null;
-        switch (comboMaster.getSelectedIndex()) {
+        String paramJenisTarif = null;
+        switch (comboJenisTarif.getSelectedIndex()) {
             case 0 :
-                namaReport = "MasterKaryawan";
-                break;
+            paramJenisTarif = "%P%";
+            break;
             case 1 :
-                namaReport = "MasterMobil";
-                break;
+            paramJenisTarif = "%Per 12 Jam%";
+            break;
             case 2 :
-                namaReport = "MasterGolonganTarif";
-                break;
-            
+            paramJenisTarif = "%Per Hari%";
+            break;
         }
-        
-        cetakLaporan(namaReport);
-        //JasperViewer.viewReport(jasperPrint, false);
+
+        cetakLaporan("TransaksiTarifMobil",paramJenisTarif);
     }//GEN-LAST:event_buttonSimpanActionPerformed
 
     private void buttonKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKeluarActionPerformed
-        HomeView.menuItemLaporanDataMaster.setEnabled(true);
+        HomeView.menuItemLaporanTransaksiTarifMobil.setEnabled(true);
         dispose();
     }//GEN-LAST:event_buttonKeluarActionPerformed
 
-    private void comboMasterItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboMasterItemStateChanged
-        if (comboMaster.getSelectedIndex() != -1) {
+    private void comboJenisTarifItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboJenisTarifItemStateChanged
+          if (comboJenisTarif.getSelectedIndex() != -1) {
             buttonSimpan.setEnabled(true);
         } else {
             buttonSimpan.setEnabled(false);
         }
-    }//GEN-LAST:event_comboMasterItemStateChanged
+    }//GEN-LAST:event_comboJenisTarifItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JButton buttonKeluar;
     public static javax.swing.JButton buttonSimpan;
     private javax.swing.JPanel buttons;
-    private javax.swing.JComboBox<String> comboMaster;
+    private javax.swing.JComboBox<String> comboJenisTarif;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
-public JasperPrint cetakLaporan(String namaReport) {
+public JasperPrint cetakLaporan(String namaReport,String paramJenisTarif) {
      try {
             Penyewaan penyewaan = new Penyewaan();
             
             penyewaan.setPathReport("./report/");
             penyewaan.setSourceReport(penyewaan.getPathReport()+"templates/"+namaReport+".jrxml");
             penyewaan.setResultReport(penyewaan.getPathReport()+"result/"+namaReport+".html");
+            
+            HashMap hashMap = new HashMap();
+            hashMap.put("paramJenisTarif",paramJenisTarif);
+            
 
             JasperReport jasperReport = JasperCompileManager.compileReport(penyewaan.getSourceReport());
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, Connection.getConnection());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, hashMap, Connection.getConnection());
             JasperExportManager.exportReportToHtmlFile(jasperPrint, penyewaan.getResultReport());
             JasperViewer.viewReport(jasperPrint, false);
             return jasperPrint;
@@ -196,4 +193,3 @@ public JasperPrint cetakLaporan(String namaReport) {
         }
     }
 }
-

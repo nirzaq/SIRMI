@@ -4,6 +4,7 @@ import id.arief.sirmi.util.MessageUtil;
 import id.arief.sirmi.util.ViewUtil;
 import id.arief.sirmi.fasilitas.ubahpassword.UbahPasswordView;
 import id.arief.sirmi.laporan.master.LaporanDataMasterView;
+import id.arief.sirmi.laporan.transaksi.LaporanTransaksiTarifMobil;
 import id.arief.sirmi.master.goltarif.GolTarifView;
 import id.arief.sirmi.master.karyawan.KaryawanView;
 import id.arief.sirmi.master.mobil.MobilView;
@@ -63,7 +64,10 @@ public class HomeView extends javax.swing.JFrame {
         menuItemPengembalian = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         menuItemLaporanDataMaster = new javax.swing.JMenuItem();
-        menuItemTransaksi = new javax.swing.JMenuItem();
+        menuLaporanTransaksi = new javax.swing.JMenu();
+        menuItemLaporanTransaksiTarifMobil = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuItemUbahPassword = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -269,8 +273,23 @@ public class HomeView extends javax.swing.JFrame {
         });
         jMenu3.add(menuItemLaporanDataMaster);
 
-        menuItemTransaksi.setText("Data Transaksi");
-        jMenu3.add(menuItemTransaksi);
+        menuLaporanTransaksi.setText("Data Transaksi");
+
+        menuItemLaporanTransaksiTarifMobil.setText("Tarif Mobil");
+        menuItemLaporanTransaksiTarifMobil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemLaporanTransaksiTarifMobilActionPerformed(evt);
+            }
+        });
+        menuLaporanTransaksi.add(menuItemLaporanTransaksiTarifMobil);
+
+        jMenuItem1.setText("Penyewaan");
+        menuLaporanTransaksi.add(jMenuItem1);
+
+        jMenuItem3.setText("Pengembalian");
+        menuLaporanTransaksi.add(jMenuItem3);
+
+        jMenu3.add(menuLaporanTransaksi);
 
         jMenuBar1.add(jMenu3);
 
@@ -423,6 +442,13 @@ public class HomeView extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_menuItemLaporanDataMasterActionPerformed
 
+    private void menuItemLaporanTransaksiTarifMobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLaporanTransaksiTarifMobilActionPerformed
+        LaporanTransaksiTarifMobil view = new LaporanTransaksiTarifMobil();
+        desktopPaneUtama.add(view);
+        menuItemLaporanTransaksiTarifMobil.setEnabled(false);
+        view.setVisible(true);
+    }//GEN-LAST:event_menuItemLaporanTransaksiTarifMobilActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -464,7 +490,9 @@ public class HomeView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     public static javax.swing.JLabel labelAlamat;
     public static javax.swing.JLabel labelAlamat1;
@@ -477,7 +505,8 @@ public class HomeView extends javax.swing.JFrame {
     public static javax.swing.JLabel labelUsername;
     public static javax.swing.JMenuItem menuItemKaryawan;
     private javax.swing.JMenuItem menuItemKeluar;
-    private javax.swing.JMenuItem menuItemLaporanDataMaster;
+    public static javax.swing.JMenuItem menuItemLaporanDataMaster;
+    public static javax.swing.JMenuItem menuItemLaporanTransaksiTarifMobil;
     public static javax.swing.JMenuItem menuItemMasterMobil;
     private javax.swing.JMenuItem menuItemPengembalian;
     public static javax.swing.JMenuItem menuItemPenyewaan;
@@ -485,8 +514,8 @@ public class HomeView extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemTarif;
     public static javax.swing.JMenuItem menuItemTarifMobil;
     private javax.swing.JMenuItem menuItemTentang;
-    private javax.swing.JMenuItem menuItemTransaksi;
     public static javax.swing.JMenuItem menuItemUbahPassword;
+    private javax.swing.JMenu menuLaporanTransaksi;
     public static javax.swing.JMenu menuMaster;
     private javax.swing.JMenu menuTransaksi;
     // End of variables declaration//GEN-END:variables
@@ -512,7 +541,7 @@ public class HomeView extends javax.swing.JFrame {
         //Menu Transaksi -E
         //Menu Laporan -S
         menuItemLaporanDataMaster.setIcon(IconUtil.setIconTransaksiMenu());
-        menuItemTransaksi.setIcon(IconUtil.setIconTransaksiMenu());
+        menuLaporanTransaksi.setIcon(IconUtil.setIconTransaksiMenu());
         //Menu Laporan -E
         //Menu Fasilitas -S
         menuItemUbahPassword.setIcon(IconUtil.setIconUbahPasswordMenuItem());
