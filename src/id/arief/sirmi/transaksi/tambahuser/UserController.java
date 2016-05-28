@@ -1,4 +1,4 @@
-package id.arief.sirmi.master.user;
+package id.arief.sirmi.transaksi.tambahuser;
 
 import id.arief.sirmi.database.Connection;
 import java.sql.PreparedStatement;
@@ -29,6 +29,7 @@ public class UserController {
                 user.setKode_user(resultSet.getString("kode_user"));
                 user.setUsername(resultSet.getString("username"));
                 user.setHakAkses(HakAkses.valueOf(resultSet.getString("hak_akses")));
+                user.setKodeKaryawan(resultSet.getString("kode_karyawan"));
                 list.add(user);
             }
             resultSet.close();

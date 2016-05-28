@@ -1,11 +1,11 @@
-package id.arief.sirmi.master.user;
+package id.arief.sirmi.transaksi.tambahuser;
 
 import id.arief.sirmi.home.HomeView;
+import static id.arief.sirmi.home.HomeView.desktopPaneUtama;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.MessageUtil;
-import id.arief.sirmi.util.ViewUtil;
-import static id.arief.sirmi.home.HomeView.desktopPaneUtama;
 import id.arief.sirmi.util.TableUtil;
+import id.arief.sirmi.util.ViewUtil;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -15,13 +15,13 @@ import org.jdesktop.xswingx.PromptSupport;
  *
  * @author arief-asus
  */
-public class UserView extends javax.swing.JInternalFrame {
-
-    UserTableModel userTableModel = new UserTableModel();
-    UserController userController = new UserController();
-    UserTambahUbah userTambahUbah = new UserTambahUbah();
-
-    public UserView() {
+public class TambahUserView extends javax.swing.JInternalFrame {
+    
+    UserController controller = new UserController();
+    TambahUserTU tambahUbah = new TambahUserTU();
+    UserTableModel tableModel = new UserTableModel();
+    
+    public TambahUserView() {
         initComponents();
     }
 
@@ -29,25 +29,27 @@ public class UserView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textNopol = new javax.swing.JTextField();
+        textKodeUser = new javax.swing.JTextField();
+        textUsername = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         comboCari = new javax.swing.JComboBox<>();
         textCari = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tableData = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         buttonTambah = new javax.swing.JButton();
         buttonUbah = new javax.swing.JButton();
         buttonHapus = new javax.swing.JButton();
         buttonClear = new javax.swing.JButton();
         buttonKeluar = new javax.swing.JButton();
 
-        textNopol.setText("jTextField1");
+        textKodeUser.setText("jTextField1");
 
-        setAutoscrolls(true);
+        textUsername.setText("jTextField1");
+
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -72,10 +74,10 @@ public class UserView extends javax.swing.JInternalFrame {
         jLabel1.setText("DATA USER");
         jPanel1.add(jLabel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Cari");
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText("Cari");
 
         comboCari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Username", "Kode User" }));
         comboCari.setToolTipText("Cari Mobil Berdasarkan");
@@ -111,9 +113,9 @@ public class UserView extends javax.swing.JInternalFrame {
         tableData.setFocusTraversalPolicyProvider(true);
         tableData.setGridColor(new java.awt.Color(0, 0, 0));
         tableData.setName(""); // NOI18N
-        jScrollPane1.setViewportView(tableData);
+        jScrollPane2.setViewportView(tableData);
 
-        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         buttonTambah.setText("Tambah");
         buttonTambah.setToolTipText("Tambah Mobil");
@@ -122,7 +124,7 @@ public class UserView extends javax.swing.JInternalFrame {
                 buttonTambahActionPerformed(evt);
             }
         });
-        jPanel3.add(buttonTambah);
+        jPanel5.add(buttonTambah);
 
         buttonUbah.setText("Ubah");
         buttonUbah.setToolTipText("Ubah Mobil");
@@ -131,7 +133,7 @@ public class UserView extends javax.swing.JInternalFrame {
                 buttonUbahActionPerformed(evt);
             }
         });
-        jPanel3.add(buttonUbah);
+        jPanel5.add(buttonUbah);
 
         buttonHapus.setText("Hapus");
         buttonHapus.setToolTipText("Hapus Mobil");
@@ -140,7 +142,7 @@ public class UserView extends javax.swing.JInternalFrame {
                 buttonHapusActionPerformed(evt);
             }
         });
-        jPanel3.add(buttonHapus);
+        jPanel5.add(buttonHapus);
 
         buttonClear.setText("Bersih");
         buttonClear.setToolTipText("Reset Form Master Mobil");
@@ -149,7 +151,7 @@ public class UserView extends javax.swing.JInternalFrame {
                 buttonClearActionPerformed(evt);
             }
         });
-        jPanel3.add(buttonClear);
+        jPanel5.add(buttonClear);
 
         buttonKeluar.setText("Keluar");
         buttonKeluar.setToolTipText("Tutup Form Master Mobil");
@@ -158,38 +160,38 @@ public class UserView extends javax.swing.JInternalFrame {
                 buttonKeluarActionPerformed(evt);
             }
         });
-        jPanel3.add(buttonKeluar);
+        jPanel5.add(buttonKeluar);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboCari, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textCari))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
                     .addComponent(comboCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -200,8 +202,8 @@ public class UserView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -210,33 +212,62 @@ public class UserView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+    private void textCariFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCariFocusGained
+        buttonClear.doClick();
+    }//GEN-LAST:event_textCariFocusGained
 
-        PromptSupport.setPrompt("Masukkan Kata Kunci", textCari);
-        
-        buttonTambah.setIcon(IconUtil.setIconTambah());
-        buttonUbah.setIcon(IconUtil.setIconEdit());
-        buttonHapus.setIcon(IconUtil.setIconHapus());
-        buttonClear.setIcon(IconUtil.setIconReset());
-        buttonKeluar.setIcon(IconUtil.setIconKeluar());
-       
-        tableData.setModel(userTableModel);
-       
-        TableUtil.tabelKosong(tableData, userTableModel);
-        refresh();
-        TableUtil.resizeColumnWidth(tableData);
-      
+    private void textCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCariKeyReleased
+        try {
+            String sqlParameter = null;
+            String searchParameter;
+            switch (comboCari.getSelectedIndex()) {
+                case 0:
+                sqlParameter = "username";
+                break;
+                case 1:
+                sqlParameter = "kode_user";
+                break;
+            }
 
-        tableAction();
+            searchParameter = textCari.getText();
+            List<User> list = controller.getDataByParameter(sqlParameter, searchParameter);
+            tableModel.setData(list);
+        } catch (Exception error) {
+            System.out.println("Terjadi kesalahan : \n& " + error);
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan : "+error.getMessage());
+        }
+    }//GEN-LAST:event_textCariKeyReleased
 
-    }//GEN-LAST:event_formInternalFrameOpened
+    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
+        TambahUserTU.labelTitle.setText("TAMBAH USER");
+        TambahUserTU.buttonCariKaryawan.setEnabled(true);
+        ViewUtil.showForm(desktopPaneUtama, this, tambahUbah);
+        TambahUserTU.textKodeUser.setText("<Otomatis>");
+        TambahUserTU.textKodeKaryawan.setText("");
+        TambahUserTU.textUsername.setText("");
+    }//GEN-LAST:event_buttonTambahActionPerformed
+
+    private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
+        TambahUserTU.labelTitle.setText("UBAH USER");
+        ViewUtil.showForm(desktopPaneUtama, this, tambahUbah);
+    }//GEN-LAST:event_buttonUbahActionPerformed
+
+    private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
+        int confirm = MessageUtil.
+        showConfirmMessage("Apakah anda ingin menghapus user dengan username " + textKodeUser.getText() + " ?", this);
+        if (confirm == JOptionPane.YES_OPTION) {
+
+        } else if (confirm == JOptionPane.NO_OPTION) {
+
+        }
+    }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
         refresh();
@@ -247,55 +278,27 @@ public class UserView extends javax.swing.JInternalFrame {
         HomeView.menuItemTambahUser.setEnabled(true);
     }//GEN-LAST:event_buttonKeluarActionPerformed
 
-    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
-        UserTambahUbah.labelTitle.setText("TAMBAH USER");
-        ViewUtil.showForm(desktopPaneUtama, this, userTambahUbah);
-        UserTambahUbah.textKodeUser.setText("<Otomatis>");
-        UserTambahUbah.clearField();
-    }//GEN-LAST:event_buttonTambahActionPerformed
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        PromptSupport.setPrompt("Masukkan Kata Kunci", textCari);
+        
+        buttonTambah.setIcon(IconUtil.setIconTambah());
+        buttonUbah.setIcon(IconUtil.setIconEdit());
+        buttonHapus.setIcon(IconUtil.setIconHapus());
+        buttonClear.setIcon(IconUtil.setIconReset());
+        buttonKeluar.setIcon(IconUtil.setIconKeluar());
+       
+        tableData.setModel(tableModel);
+       
+        TableUtil.kolomRataTengah(tableData, 1);
+        TableUtil.tabelKosong(tableData, tableModel);
+        refresh();
+        TableUtil.resizeColumnWidth(tableData);
+      
 
-    private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
-        UserTambahUbah.labelTitle.setText("UBAH MOBIL");
-        ViewUtil.showForm(desktopPaneUtama, this, userTambahUbah);
-    }//GEN-LAST:event_buttonUbahActionPerformed
+        tableAction();
+    }//GEN-LAST:event_formInternalFrameOpened
 
-    private void textCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCariKeyReleased
-        try {
-            String sqlParameter = null;
-            String searchParameter;
-            switch (comboCari.getSelectedIndex()) {
-                case 0:
-                    sqlParameter = "username";
-                    break;
-                case 1:
-                    sqlParameter = "kode_user";
-                    break;
-            }
 
-            searchParameter = textCari.getText();
-            List<User> list = userController.getDataByParameter(sqlParameter, searchParameter);
-            userTableModel.setData(list);
-        } catch (Exception error) {
-            System.out.println("Terjadi kesalahan : \n& " + error);
-            JOptionPane.showMessageDialog(this, "Terjadi kesalahan : "+error.getMessage());
-        }
-    }//GEN-LAST:event_textCariKeyReleased
-
-    private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
-        int confirm = MessageUtil.
-                showConfirmMessage("Apakah anda ingin menghapus user dengan username " + textNopol.getText() + " ?", this);
-        if (confirm == JOptionPane.YES_OPTION) {
-          
-        } else if (confirm == JOptionPane.NO_OPTION) {
-            
-        }
-    }//GEN-LAST:event_buttonHapusActionPerformed
-
-    private void textCariFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCariFocusGained
-        buttonClear.doClick();
-    }//GEN-LAST:event_textCariFocusGained
-
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">           
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonClear;
     private javax.swing.JButton buttonHapus;
@@ -304,14 +307,15 @@ public class UserView extends javax.swing.JInternalFrame {
     private javax.swing.JButton buttonUbah;
     private javax.swing.JComboBox<String> comboCari;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTable tableData;
     private javax.swing.JTextField textCari;
-    private javax.swing.JTextField textNopol;
+    private javax.swing.JTextField textKodeUser;
+    private javax.swing.JTextField textUsername;
     // End of variables declaration//GEN-END:variables
     public void tableAction() {
         tableData
@@ -319,13 +323,21 @@ public class UserView extends javax.swing.JInternalFrame {
             int row = tableData.getSelectedRow();
             //Cek Baris, Apakah terseleksi?
             if (row != -1) {
-                
-                User user = userTableModel.get(row);
+               
+                User user = tableModel.get(row);
+               
                 //Disable Button Tambah
                 buttonTambah.setEnabled(false);
                 buttonUbah.setEnabled(true);
                 buttonHapus.setEnabled(true);
-               
+                textKodeUser.setText(user.getKode_user());
+                
+                //Pass data ke TambahUbah
+                TambahUserTU.buttonCariKaryawan.setEnabled(false);
+                TambahUserTU.textKodeKaryawan.setText(user.getKodeKaryawan());
+                TambahUserTU.textKodeUser.setText(user.getKode_user());
+                TambahUserTU.textUsername.setText(user.getUsername());
+                
             }
         });
     }
@@ -336,19 +348,21 @@ public class UserView extends javax.swing.JInternalFrame {
      */
     public void loadDatabase() {
         try {
-            List<User> list = userController.getData();
-            userTableModel.setData(list);
+            List<User> list = controller.getData();
+            tableModel.setData(list);
         } catch (Exception error) {
             System.out.println("Terjadi kesalahan : \n& " + error);
             JOptionPane.showMessageDialog(this, "Terjadi kesalahan : ");
         }
     }
-
-    private void refresh() {
-        //Ambil Data dari Database
+    public void viewSetup() {
+        
+    }
+    
+    public void refresh() {
         loadDatabase();
-        //Disable Button
-        UserTambahUbah.buttonSimpan.setEnabled(false);
+        
+        TambahUserTU.buttonSimpan.setEnabled(false);
         textCari.setText("");
         tableData.clearSelection();
         buttonUbah.setEnabled(false);

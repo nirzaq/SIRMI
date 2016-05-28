@@ -161,6 +161,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textTarif">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
@@ -220,7 +223,7 @@
             </Container>
             <Component class="javax.swing.JRadioButton" name="radioPerJam">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Per Jam"/>
+                <Property name="text" type="java.lang.String" value="Per 12 Jam"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="radioPerHari">
@@ -253,7 +256,7 @@
                     <Font bold="true" component="labelTitleTambahUbahMobil" property="font" relativeSize="true" size="13"/>
                   </FontInfo>
                 </Property>
-                <Property name="text" type="java.lang.String" value="MASTER TARIF"/>
+                <Property name="text" type="java.lang.String" value="UBAH GOLONGAN TARIF"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

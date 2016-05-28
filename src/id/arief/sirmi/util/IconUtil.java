@@ -154,6 +154,11 @@ public class IconUtil {
         return icon;
     }
     
+     public static Icon setIconPrint() {
+        IconFontSwing.register(FontAwesome.getIconFont());
+        Icon icon = IconFontSwing.buildIcon(FontAwesome.PRINT, 20);
+        return icon;
+    }
      
     
     

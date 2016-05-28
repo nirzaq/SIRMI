@@ -18,8 +18,9 @@ import org.jdesktop.xswingx.PromptSupport;
 public class MobilView extends javax.swing.JInternalFrame {
 
     MobilTableModel mobilTableModel = new MobilTableModel();
-    MobilController mobilPresenter = new MobilController();
+    MobilController controller = new MobilController();
     MobilTambahUbah mobilTambahUbah = new MobilTambahUbah();
+    String kodeMobil;
 
     public MobilView() {
         initComponents();
@@ -220,21 +221,20 @@ public class MobilView extends javax.swing.JInternalFrame {
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
 
         PromptSupport.setPrompt("Masukkan Kata Kunci", textCariMobil);
-        
+
         buttonTambah.setIcon(IconUtil.setIconTambah());
         buttonUbah.setIcon(IconUtil.setIconEdit());
         buttonHapus.setIcon(IconUtil.setIconHapus());
         buttonClear.setIcon(IconUtil.setIconReset());
         buttonKeluar.setIcon(IconUtil.setIconKeluar());
-       
+
         tableMobil.setModel(mobilTableModel);
-       
+
         TableUtil.kolomRataTengah(tableMobil, 1);
         TableUtil.kolomRataTengah(tableMobil, 6);
         TableUtil.tabelKosong(tableMobil, mobilTableModel);
         refresh();
         TableUtil.resizeColumnWidth(tableMobil);
-      
 
         tableMobilAction();
 
@@ -262,7 +262,8 @@ public class MobilView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttonUbahActionPerformed
 
     private void textCariMobilKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCariMobilKeyReleased
-        try {
+        
+    try {
             String sqlParameter = null;
             String searchParameter;
             switch (comboCariMobil.getSelectedIndex()) {
@@ -287,23 +288,35 @@ public class MobilView extends javax.swing.JInternalFrame {
             }
 
             searchParameter = textCariMobil.getText();
-            List<Mobil> list = mobilPresenter
-                    .getMobilByParameter(sqlParameter, searchParameter);
+            List<Mobil> list = controller.getMobilByParameter(sqlParameter, searchParameter);
             mobilTableModel.setData(list);
-        } catch (Exception error) {
+    } catch (Exception error) {
             System.out.println("Terjadi kesalahan : \n& " + error);
             JOptionPane.showMessageDialog(this, "Terjadi kesalahan : ");
-        }
+         }
     }//GEN-LAST:event_textCariMobilKeyReleased
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
-        int confirm = MessageUtil.
-                showConfirmMessage("Apakah anda ingin menghapus mobil dengan nopol " + textNopol.getText() + " ?", this);
+
+        int confirm = MessageUtil.showConfirmMessage("Apakah anda ingin menghapus mobil dengan nopol " + textNopol.getText() + " ?", this);
+
         if (confirm == JOptionPane.YES_OPTION) {
-          
-        } else if (confirm == JOptionPane.NO_OPTION) {
-            
+
+            if (controller.isMobilRent(kodeMobil)) {
+
+                MessageUtil.showErrorMessage("Mobil sedang disewa", this);
+                refresh();
+
+            } else {
+                controller.deleteMobil(kodeMobil);
+
+                MessageUtil.showInfoMessage("Data Berhasil dihapus", this);
+                refresh();
+
+            }
+
         }
+
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void textCariMobilFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textCariMobilFocusGained
@@ -331,35 +344,36 @@ public class MobilView extends javax.swing.JInternalFrame {
     public void tableMobilAction() {
         tableMobil
                 .getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            int row = tableMobil.getSelectedRow();
-            //Cek Baris, Apakah terseleksi?
-            if (row != -1) {
-                
-                Mobil mobil = mobilTableModel.get(row);
-                //Disable Button Tambah
-                buttonTambah.setEnabled(false);
-                buttonUbah.setEnabled(true);
-                buttonHapus.setEnabled(true);
-                //set textNopol
-                textNopol.setText(mobil.getNopol_mobil());
-                //Pass data ke MobilTambahUbah
-                MobilTambahUbah.textKodeMobil.setText(mobil.getKode_mobil());
-                MobilTambahUbah.textNopol.setText(mobil.getNopol_mobil());
-                MobilTambahUbah.textMerk.setText(mobil.getMerk_mobil());
-                MobilTambahUbah.textNamaMobil.setText(mobil.getNama_mobil());
-                MobilTambahUbah.textJenisMobil.setText(mobil.getJenis_mobil());
-                MobilTambahUbah.textTahunMobil.setText(mobil.getTahun_pembuatan());
-            }
-        });
+                    int row = tableMobil.getSelectedRow();
+                    //Cek Baris, Apakah terseleksi?
+                    if (row != -1) {
+
+                        Mobil mobil = mobilTableModel.get(row);
+                        //Disable Button Tambah
+                        buttonTambah.setEnabled(false);
+                        buttonUbah.setEnabled(true);
+                        buttonHapus.setEnabled(true);
+                        //set textNopol
+                        textNopol.setText(mobil.getNopol_mobil());
+                        kodeMobil = mobil.getKode_mobil();
+                        //Pass data ke MobilTambahUbah
+                        MobilTambahUbah.textKodeMobil.setText(mobil.getKode_mobil());
+                        MobilTambahUbah.textNopol.setText(mobil.getNopol_mobil());
+                        MobilTambahUbah.textMerk.setText(mobil.getMerk_mobil());
+                        MobilTambahUbah.textNamaMobil.setText(mobil.getNama_mobil());
+                        MobilTambahUbah.textJenisMobil.setText(mobil.getJenis_mobil());
+                        MobilTambahUbah.textTahunMobil.setText(mobil.getTahun_pembuatan());
+                    }
+                });
     }
-    
+
     /**
      * Method untuk mengambil data dari database
-     * 
+     *
      */
     public void loadDatabase() {
         try {
-            List<Mobil> list = mobilPresenter.getMobil();
+            List<Mobil> list = controller.getMobil();
             mobilTableModel.setData(list);
         } catch (Exception error) {
             System.out.println("Terjadi kesalahan : \n& " + error);

@@ -118,29 +118,22 @@ public class MobilController {
         }
     }
 
-    public boolean deleteMobil(String kodeMobil) {
-        boolean isDeletable = false;
-        if (cekStatusMobil(kodeMobil)) {
-            try {
-                String sqlDelete = "DELETE FROM m_mobil WHERE kode_mobil = ?";
-                PreparedStatement ps;
-                ps = Connection.getConnection().prepareStatement(sqlDelete);
-                ps.setString(1, kodeMobil);
-                ps.executeUpdate();
-            } catch (SQLException ex) {
-                Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            
-        }
-        return isDeletable = false;
+    public void deleteMobil(String kodeMobil) {
 
+        try {
+            String sqlDelete = "DELETE FROM m_mobil WHERE kode_mobil = ?";
+            PreparedStatement ps;
+            ps = Connection.getConnection().prepareStatement(sqlDelete);
+            ps.setString(1, kodeMobil);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean cekMobil(String nopol) {
         boolean adaMobil = false;
         String sql_cek = "SELECT * FROM m_mobil WHERE nopol_mobil = '" + nopol + "'";
-        String sql_cek_ubah = "SELECT * FROM m_mobil WHERE nopol_mobil = '" + nopol + "'";
         Statement statement;
         ResultSet resultSet;
 
@@ -151,10 +144,12 @@ public class MobilController {
                 adaMobil = true;
             } else {
                 adaMobil = false;
+
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MobilController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         return adaMobil;
@@ -173,10 +168,12 @@ public class MobilController {
                 adaMobil = true;
             } else {
                 adaMobil = false;
+
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MobilController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         return adaMobil;
@@ -209,31 +206,29 @@ public class MobilController {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MobilController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return idMobil;
     }
 
-    public boolean cekStatusMobil(String kodeMobil) {
-        boolean adaMobil = false;
-        String sql_cek = "SELECT * FROM t_tarif_mobil WHERE nopol_mobil = '" + kodeMobil + "' AND kode_mobil = 'AV'";
+    public boolean isMobilRent(String kodeMobil) {
+        
+        boolean isMobilRent = false;
+        String sql_cek = "SELECT * FROM t_tarif_mobil WHERE kode_mobil ='" + kodeMobil + "' AND status = 'NA'";
         Statement statement;
         ResultSet resultSet;
 
         try {
             statement = Connection.getConnection().createStatement();
             resultSet = statement.executeQuery(sql_cek);
-            if (resultSet.first()) {
-                adaMobil = true;
-            } else {
-                adaMobil = false;
-            }
+            isMobilRent = resultSet.first();
 
         } catch (SQLException ex) {
             Logger.getLogger(MobilController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return adaMobil;
+        return isMobilRent;
     }
 
 }

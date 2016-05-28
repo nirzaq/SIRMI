@@ -1,9 +1,11 @@
 package id.arief.sirmi.master.goltarif;
 
+import static id.arief.sirmi.home.HomeView.desktopPaneUtama;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.MessageUtil;
 import static id.arief.sirmi.home.HomeView.menuItemMasterMobil;
 import id.arief.sirmi.util.TableUtil;
+import id.arief.sirmi.util.ViewUtil;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -246,15 +248,15 @@ public class GolTarifView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buttonKeluarActionPerformed
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
-        GolTarifTambahUbah.labelTitleTambahUbahMobil.setText("TAMBAH MOBIL");
-        //ViewUtil.showForm(desktopPaneUtama, this, mobilTambahUbah);
-        GolTarifTambahUbah.textGolTarif.setText("<Otomatis>");
-        GolTarifTambahUbah.clearField();
+        GolTarifTambahUbah.labelTitleTambahUbahMobil.setText("TAMBAH GOLONGAN TARIF");
+        ViewUtil.showForm(desktopPaneUtama, this, tambahUbah);
+      
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
-        GolTarifTambahUbah.labelTitleTambahUbahMobil.setText("UBAH MOBIL");
-        //ViewUtil.showForm(desktopPaneUtama, this, mobilTambahUbah);
+        GolTarifTambahUbah.labelTitleTambahUbahMobil.setText("UBAH GOLONGAN TARIF");
+        ViewUtil.showForm(desktopPaneUtama, this, tambahUbah);
+        GolTarifTambahUbah.buttonSimpan.setEnabled(true);
     }//GEN-LAST:event_buttonUbahActionPerformed
 
     private void textCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCariKeyReleased

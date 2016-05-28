@@ -19,7 +19,8 @@ import org.jdesktop.xswingx.PromptSupport;
  */
 public class TransaksiPenyewaanDataView extends javax.swing.JInternalFrame {
     
-
+    TransaksiPenyewaanTableModel tableModel = new TransaksiPenyewaanTableModel();
+    
 
     public TransaksiPenyewaanDataView() {
         initComponents();

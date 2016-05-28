@@ -433,7 +433,7 @@ public final void setBatasKarakter() {
         fields.add(textTahunMobil);
 
         for (JTextField jTextField : fields) {
-            if (jTextField.getText().equals("")) {
+            if (jTextField.getText().equals("") || jTextField.getText().startsWith(" ")) {
                 buttonSimpan.setEnabled(false);
                 break;
             } else {

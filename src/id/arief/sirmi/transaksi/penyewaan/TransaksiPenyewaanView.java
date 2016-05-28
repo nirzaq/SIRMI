@@ -7,18 +7,13 @@ import id.arief.sirmi.transaksi.tarifmobil.*;
 import id.arief.sirmi.util.BatasKarakter;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.InputUtil;
-import id.arief.sirmi.util.MessageUtil;
 import id.arief.sirmi.util.TabIndex;
 
 import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
-import org.codehaus.groovy.control.messages.Message;
 
 /**
  *
@@ -464,7 +459,7 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
     private void comboJaminanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboJaminanKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_TAB) {
             //textNoTelp.requestFocus();
-            System.out.println("ComboJaminanKeyPressed");
+           
         }
     }//GEN-LAST:event_comboJaminanKeyPressed
 
@@ -483,7 +478,6 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
             textLamaSewa.requestFocus();
         } else {
             buttonCariMobil.setEnabled(true);
-            
         }
     }//GEN-LAST:event_comboJaminanItemStateChanged
 
@@ -620,7 +614,7 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
         p.setTanggalTransaksi(tanggalTransaksi);
         p.setKodeKaryawan(HomeView.labelKodeKaryawan.getText());
         controller.tambahTransaksiSewa(p);
-        //controller.setStatusMobilNA(textCariMobil.getText());
+        controller.setStatusMobilNA(textCariMobil.getText());
         JasperPrint jasperPrint = controller.cetakNotaSewa("NotaSewa");
         buttonReset.doClick();
         JasperViewer.viewReport(jasperPrint, false);
@@ -729,21 +723,4 @@ public class TransaksiPenyewaanView extends javax.swing.JInternalFrame {
             buttonSimpan.setEnabled(true);
         }
     }
-    
-    public String setFormatUangIndo(double nilai) {
-        
-        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
-        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
-
-        formatRp.setCurrencySymbol("Rp.");
-        formatRp.setMonetaryDecimalSeparator(',');
-        formatRp.setGroupingSeparator('.');
-
-        kursIndonesia.setDecimalFormatSymbols(formatRp);
-        String nilaiUang = kursIndonesia.format(nilai);
-        return nilaiUang;
-    }
-
-    
-    
 }

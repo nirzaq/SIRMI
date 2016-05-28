@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package id.arief.sirmi.master.user;
+package id.arief.sirmi.transaksi.tambahuser;
 
 /**
  *
@@ -14,6 +14,7 @@ public class User {
     String username;
     String password;
     HakAkses hakAkses;
+    String kodeKaryawan;
 
     public String getKode_user() {
         return kode_user;
@@ -45,5 +46,13 @@ public class User {
 
     public void setHakAkses(HakAkses hakAkses) {
         this.hakAkses = hakAkses;
+    }
+
+    public String getKodeKaryawan() {
+        return kodeKaryawan;
+    }
+
+    public void setKodeKaryawan(String kodeKaryawan) {
+        this.kodeKaryawan = kodeKaryawan;
     }
 }

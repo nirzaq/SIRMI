@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.JTextField" name="textNopol">
+    <Component class="javax.swing.JTextField" name="textKodeKaryawan">
       <Properties>
         <Property name="text" type="java.lang.String" value="jTextField1"/>
       </Properties>

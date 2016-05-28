@@ -1,6 +1,5 @@
 package id.arief.sirmi.master.karyawan;
 
-import id.arief.sirmi.master.mobil.*;
 import id.arief.sirmi.util.IconUtil;
 import id.arief.sirmi.util.MessageUtil;
 import id.arief.sirmi.util.ViewUtil;
@@ -29,7 +28,7 @@ public class KaryawanView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textNopol = new javax.swing.JTextField();
+        textKodeKaryawan = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -45,7 +44,7 @@ public class KaryawanView extends javax.swing.JInternalFrame {
         buttonClear = new javax.swing.JButton();
         buttonKeluar = new javax.swing.JButton();
 
-        textNopol.setText("jTextField1");
+        textKodeKaryawan.setText("jTextField1");
 
         setAutoscrolls(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -235,7 +234,7 @@ public class KaryawanView extends javax.swing.JInternalFrame {
         TableUtil.resizeColumnWidth(tableData);
       
 
-        tableMobilAction();
+        tableAction();
 
     }//GEN-LAST:event_formInternalFrameOpened
 
@@ -255,6 +254,7 @@ public class KaryawanView extends javax.swing.JInternalFrame {
 
     private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
         KaryawanTambahUbah.labelTitleTambahUbahKaryawan.setText("UBAH KARYAWAN");
+        KaryawanTambahUbah.textKodeKaryawan.setEnabled(false);
         ViewUtil.showForm(desktopPaneUtama, this, karyawanTambahUbah);
     }//GEN-LAST:event_buttonUbahActionPerformed
 
@@ -288,11 +288,10 @@ public class KaryawanView extends javax.swing.JInternalFrame {
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
         int confirm = MessageUtil.
-                showConfirmMessage("Apakah anda ingin menghapus karyawan dengan kode " + textNopol.getText() + " ?", this);
+            showConfirmMessage("Apakah anda ingin menghapus karyawan dengan kode " + textKodeKaryawan.getText() + " ?", this);
         if (confirm == JOptionPane.YES_OPTION) {
-          
-        } else if (confirm == JOptionPane.NO_OPTION) {
-            
+            controller.deleteKaryawan(textKodeKaryawan.getText());
+            refresh();
         }
     }//GEN-LAST:event_buttonHapusActionPerformed
 
@@ -316,9 +315,9 @@ public class KaryawanView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable tableData;
     private javax.swing.JTextField textCari;
-    private javax.swing.JTextField textNopol;
+    private javax.swing.JTextField textKodeKaryawan;
     // End of variables declaration//GEN-END:variables
-    public void tableMobilAction() {
+    public void tableAction() {
         tableData
                 .getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             int row = tableData.getSelectedRow();
@@ -330,8 +329,8 @@ public class KaryawanView extends javax.swing.JInternalFrame {
                 buttonTambah.setEnabled(false);
                 buttonUbah.setEnabled(true);
                 buttonHapus.setEnabled(true);
-                
-                //Pass data ke MobilTambahUbah
+                textKodeKaryawan.setText(karyawan.getKodeKaryawan());
+                //Pass data ke TambahUbah
                 KaryawanTambahUbah.textKodeKaryawan.setText(karyawan.getKodeKaryawan());
                 KaryawanTambahUbah.textNamaKaryawan.setText(karyawan.getNamaKaryawan());
                 KaryawanTambahUbah.textTanggalLahirKaryawan.setDate(karyawan.getTanggalLahirKaryawan());

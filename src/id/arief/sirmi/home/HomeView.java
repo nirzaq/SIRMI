@@ -3,11 +3,12 @@ package id.arief.sirmi.home;
 import id.arief.sirmi.util.MessageUtil;
 import id.arief.sirmi.util.ViewUtil;
 import id.arief.sirmi.fasilitas.ubahpassword.UbahPasswordView;
+import id.arief.sirmi.laporan.master.LaporanDataMasterView;
 import id.arief.sirmi.master.goltarif.GolTarifView;
 import id.arief.sirmi.master.karyawan.KaryawanView;
 import id.arief.sirmi.master.mobil.MobilView;
-import id.arief.sirmi.master.user.UserView;
 import id.arief.sirmi.transaksi.penyewaan.TransaksiPenyewaanView;
+import id.arief.sirmi.transaksi.tambahuser.TambahUserView;
 import id.arief.sirmi.transaksi.tarifmobil.TarifView;
 import id.arief.sirmi.util.IconUtil;
 import java.awt.event.ActionEvent;
@@ -261,6 +262,11 @@ public class HomeView extends javax.swing.JFrame {
         jMenu3.setText("Laporan");
 
         menuItemLaporanDataMaster.setText("Data Master");
+        menuItemLaporanDataMaster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemLaporanDataMasterActionPerformed(evt);
+            }
+        });
         jMenu3.add(menuItemLaporanDataMaster);
 
         menuItemTransaksi.setText("Data Transaksi");
@@ -404,11 +410,18 @@ public class HomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemKaryawanActionPerformed
 
     private void menuItemTambahUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTambahUserActionPerformed
-        UserView userView = new UserView();
-        desktopPaneUtama.add(userView);
+        TambahUserView view = new TambahUserView();
+        desktopPaneUtama.add(view);
         menuItemTambahUser.setEnabled(false);
-        userView.setVisible(true);
+        view.setVisible(true);
     }//GEN-LAST:event_menuItemTambahUserActionPerformed
+
+    private void menuItemLaporanDataMasterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLaporanDataMasterActionPerformed
+        LaporanDataMasterView view = new LaporanDataMasterView();
+        desktopPaneUtama.add(view);
+        menuItemLaporanDataMaster.setEnabled(false);
+        view.setVisible(true);
+    }//GEN-LAST:event_menuItemLaporanDataMasterActionPerformed
 
     /**
      * @param args the command line arguments

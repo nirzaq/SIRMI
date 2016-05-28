@@ -186,7 +186,7 @@ public class CariMobilView extends javax.swing.JInternalFrame {
 
     private void tableDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDataMouseClicked
         if (evt.getClickCount() == 2) {
-            System.out.println("Clicked 2");
+            
             int row = tableData.getSelectedRow();
             TarifMobil tarifMobil = tableModel.get(row);
                 TransaksiPenyewaanView.textCariMobil.setText(tarifMobil.getKode_mobil());

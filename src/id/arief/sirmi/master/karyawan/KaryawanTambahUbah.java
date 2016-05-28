@@ -137,7 +137,7 @@ public class KaryawanTambahUbah extends javax.swing.JInternalFrame {
         labelNamaError.setForeground(new java.awt.Color(255, 0, 0));
         labelNamaError.setText("LabelError");
 
-        textTanggalLahirKaryawan.setDateFormatString("dd MMM yyyy");
+        textTanggalLahirKaryawan.setDateFormatString("dd MMMM yyyy");
         textTanggalLahirKaryawan.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 textTanggalLahirKaryawanPropertyChange(evt);
@@ -282,7 +282,7 @@ public class KaryawanTambahUbah extends javax.swing.JInternalFrame {
            textKodeKaryawan.setEnabled(false);
            boolean adaKaryawan;
            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-           adaKaryawan = controller.cekKaryawan("TEST", dateFormat.format(textTanggalLahirKaryawan.getDate()),textNamaKaryawan.getText());
+           adaKaryawan = controller.cekKaryawan(null, dateFormat.format(textTanggalLahirKaryawan.getDate()),textNamaKaryawan.getText());
            
            if (!adaKaryawan) {
                Karyawan karyawan = new Karyawan();

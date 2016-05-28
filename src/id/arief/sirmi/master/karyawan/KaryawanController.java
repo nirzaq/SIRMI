@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author arief-asus
  */
 public class KaryawanController {
+
     public List<Karyawan> getData() {
         String sqlSelect = "SELECT * FROM m_karyawan";
         Statement statement;
         ResultSet resultSet;
-        
+
         try {
             statement = Connection.getConnection().createStatement();
             resultSet = statement.executeQuery(sqlSelect);
@@ -42,7 +42,7 @@ public class KaryawanController {
             System.out.println("Terjadi kesalahan : " + exception);
             return null;
         }
-        
+
     }
 
     public List<Karyawan> getKaryawanByParameter(String sqlParameter, String searchParameter) {
@@ -56,12 +56,12 @@ public class KaryawanController {
             List<Karyawan> list = new ArrayList<>();
 
             while (resultSet.next()) {
-                
-               Karyawan karyawan = new Karyawan();
-               karyawan.setKodeKaryawan(resultSet.getString("kode_karyawan"));
-               karyawan.setNamaKaryawan(resultSet.getString("nama_karyawan"));
-               karyawan.setTanggalLahirKaryawan(resultSet.getDate("tanggal_lahir"));
-               karyawan.setKontakKaryawan(resultSet.getString("kontak_karyawan"));
+
+                Karyawan karyawan = new Karyawan();
+                karyawan.setKodeKaryawan(resultSet.getString("kode_karyawan"));
+                karyawan.setNamaKaryawan(resultSet.getString("nama_karyawan"));
+                karyawan.setTanggalLahirKaryawan(resultSet.getDate("tanggal_lahir"));
+                karyawan.setKontakKaryawan(resultSet.getString("kontak_karyawan"));
 
                 list.add(karyawan);
             }
@@ -70,9 +70,9 @@ public class KaryawanController {
         } catch (SQLException exception) {
             System.out.println("Terjadi kesalahan : " + exception);
             return null;
-        } 
+        }
     }
-    
+
     public void tambahData(Karyawan karyawan) {
         try {
             String sqlTambah = "INSERT INTO m_karyawan VALUES (?,?,?,?,?)";
@@ -88,9 +88,9 @@ public class KaryawanController {
             Logger.getLogger(KaryawanController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void ubahData(Karyawan karyawan) {
-         try {
+        try {
             String sqlTambah = "UPDATE m_karyawan set nama_karyawan = ?, tanggal_lahir = ?, kontak_karyawan = ? WHERE kode_karyawan = ?";
             PreparedStatement ps;
             ps = Connection.getConnection().prepareStatement(sqlTambah);
@@ -103,7 +103,7 @@ public class KaryawanController {
             Logger.getLogger(KaryawanController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void deleteKaryawan(String kodeKaryawan) {
         try {
             String sql = "DELETE from m_karyawan WHERE kode_karyawan = ?";
@@ -114,14 +114,12 @@ public class KaryawanController {
         } catch (SQLException ex) {
             Logger.getLogger(KaryawanController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
-    
+
     public boolean cekKaryawan(String kodeKaryawan, String tanggalLahir, String namaKaryawan) {
         boolean adaKaryawan = false;
-        String sql_cek = "SELECT * FROM m_karyawan WHERE kode_karyawan = '"+kodeKaryawan+"' OR tanggal_lahir = '"+tanggalLahir+"' AND  nama_karyawan= '"+namaKaryawan+"'";
-        String sql_test = "SELECT * FROM m_karyawan WHERE kode_karyawan = 'K003' OR tanggal_lahir = '2016-05-07' AND nama_karyawan= 'Arief'";
+        String sql_cek = "SELECT * FROM m_karyawan WHERE kode_karyawan = '" + kodeKaryawan + "' OR tanggal_lahir = '" + tanggalLahir + "' AND  nama_karyawan= '" + namaKaryawan + "'";
         Statement statement;
         ResultSet resultSet;
 
@@ -139,7 +137,7 @@ public class KaryawanController {
             Logger.getLogger(KaryawanController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return adaKaryawan ;
+        return adaKaryawan;
     }
-    
+
 }

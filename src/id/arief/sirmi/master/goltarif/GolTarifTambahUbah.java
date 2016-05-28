@@ -82,6 +82,8 @@ public class GolTarifTambahUbah extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Tarif");
 
+        textTarif.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
         jLabel3.setText("Jenis");
 
         buttons.setPreferredSize(new java.awt.Dimension(355, 25));
@@ -115,7 +117,7 @@ public class GolTarifTambahUbah extends javax.swing.JInternalFrame {
         });
         buttons.add(buttonKeluar);
 
-        radioPerJam.setText("Per Jam");
+        radioPerJam.setText("Per 12 Jam");
 
         radioPerHari.setText("Per Hari");
 
@@ -174,7 +176,7 @@ public class GolTarifTambahUbah extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelTitleTambahUbahMobil.setFont(labelTitleTambahUbahMobil.getFont().deriveFont(labelTitleTambahUbahMobil.getFont().getStyle() | java.awt.Font.BOLD, labelTitleTambahUbahMobil.getFont().getSize()+13));
-        labelTitleTambahUbahMobil.setText("MASTER TARIF");
+        labelTitleTambahUbahMobil.setText("UBAH GOLONGAN TARIF");
         jPanel2.add(labelTitleTambahUbahMobil);
 
         javax.swing.GroupLayout ContainerLayout = new javax.swing.GroupLayout(Container);
@@ -207,10 +209,11 @@ public class GolTarifTambahUbah extends javax.swing.JInternalFrame {
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         cekFields();
-        InputUtil.setNumericOnly(textGolTarif,labelTarifError);
+        InputUtil.setNumericOnly(textTarif,labelTarifError);
         buttonSimpan.setIcon(IconUtil.setIconSimpan());
         buttonReset.setIcon(IconUtil.setIconReset());
         buttonKeluar.setIcon(IconUtil.setIconKeluar());
+
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated

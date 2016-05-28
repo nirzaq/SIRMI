@@ -1,4 +1,4 @@
-package id.arief.sirmi.master.user;
+package id.arief.sirmi.transaksi.tambahuser;
 
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class UserTableModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -44,6 +44,8 @@ public class UserTableModel extends AbstractTableModel{
                 return list.get(rowIndex).getUsername();
             case 3:
                 return list.get(rowIndex).getHakAkses();
+                 case 4:
+                return list.get(rowIndex).getKodeKaryawan();
             default:
                 return null;
         }
@@ -60,6 +62,8 @@ public class UserTableModel extends AbstractTableModel{
                 return "Username";
             case 3:
                 return "Hak Akses";
+            case 4:
+                return "Kode Karyawan";
             default:
                 return null;
         }
